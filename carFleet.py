@@ -3,26 +3,29 @@
 # count the number of group of cars that has position  == target
 
 def carFleet(target, position, speed):
-    allFleet = False
-    newPos = position.copy()
-    while allFleet is False:
-        length = len(newPos)
+    allFleet = False    # to stop the loop once all cars get to the target.
 
-        for i in range(len(newPos)):
-            current = newPos[i]
-            k = 1
-            for j in range(len(newPos)):
-                if newPos[j] == current:
-                    newPos[j] = k
-                else:
-                    k+=1
+    Fleets = [] # store number of fleets
 
-        for i in range(length):
-            newPos[i]+= speed[i]
+    # in one iteration {
 
-        allFleet = True
-        return newPos
+    newPosition = []     # store number of fleets (temp)
+    for i in (position): 
+        if i not in newPosition:
+            newPosition.append(i)
+    # print(uniqueNums)
 
+    for i in newPosition: # check if a fleet has reached the target
+        if i == target:
+            newPosition.remove(i)
+            Fleets.append(1)
 
-obj = carFleet(12, [10,8,0,5,3], [2,4,1,1,3])
+    for i in range(len(newPosition)):  # update the position
+        newPosition[i] += speed[i]
+
+    # }
+    
+    return newPosition
+
+obj = carFleet(12, [2,2,0,5,3], [2,4,1,1,3])
 print(obj)
