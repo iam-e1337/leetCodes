@@ -15,26 +15,21 @@ def carFleet(target, position, speed):
         duplicateCars = [] #    stores index of duplicate cars (2d arr)
 
         unrep = [] #    store unrepeated position
-
-        for x in position: #    get list of unrepeated values of position to for iteration
-            if x not in unrep:
-                unrep.append(x)
-
+        unrep = [x for x in position if x not in unrep] #    get list of unrepeated values of position to for iteration
         for i in range(len(unrep)): #    to get index of duplicate cars
-            tempList = []
-            for j in range(len(position)):
-                if position.count(position[j]) != 1 and position[j] == position[i]:
-                    tempList.append(j)
+            tempList = [j for j in range(len(position)) if position.count(position[j]) != 1 and position[j] == position[i]]
+            # for j in range(len(position)):
+            #     if position.count(position[j]) != 1 and position[j] == position[i]:
+            #         tempList.append(j)
             if tempList != []:
                 duplicateCars.append(tempList[:])
 
         yspeeed = []
-
         for i in range(len(duplicateCars)): #   keep the only car with the lowest speed with same position
             tempPosition = position[duplicateCars[i][0]]
-            tempSpeed = []
-            for j in range(len(duplicateCars[i])):
-                tempSpeed.append(speed[duplicateCars[i][j]])
+            tempSpeed = [speed[duplicateCars[i][j]] for j in range(len(duplicateCars[i]))]
+            # for j in range(len(duplicateCars[i])):
+            #     tempSpeed.append(speed[duplicateCars[i][j]])
             
             yspeeed.append([tempPosition, min(tempSpeed)])
 
@@ -56,9 +51,9 @@ def carFleet(target, position, speed):
                         if fleetList[i][j] != yspeeed [x][j]:
                             cleanList[i] = 0
 
-        aList = [x for x in cleanList if x != 0]
+        # aList = [x for x in cleanList if x != 0]
 
-        finalList = [[x[0] for x in aList], [x[1] for x in aList]]
+        finalList = [[x[0] for x in cleanList if x != 0], [x[1] for x in cleanList if x != 0]]
 
         return finalList
     
@@ -75,10 +70,11 @@ def carFleet(target, position, speed):
                 newPosition[1][i] = 0
                 Fleets += 1
         
-        for i in range(len(newPosition[0])): #  remove the zeros in list that has zeros
             if newPosition[0][i] != 0:
                 nextPosition[0].append(newPosition[0][i])
                 nextPosition[1].append(newPosition[1][i])
+
+        # for i in range(len(newPosition[0])): #  remove the zeros in list that has zeros
         
         if sum(nextPosition[0]) == 0: #     to stop the loop
             allFleet = True
